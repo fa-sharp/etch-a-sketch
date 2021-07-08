@@ -1,0 +1,19 @@
+.etch-grid {
+    height: 500px;
+    width: 500px;
+
+    display: grid;
+    grid-template-columns: repeat(16, 1fr);
+    grid-gap: 1px;
+
+    padding: 1px;
+    background-color: black;
+}
+
+.etch-cell {
+    background-color: white;
+}
+
+.etch-cell.filled {
+    background-color: gray;
+}
