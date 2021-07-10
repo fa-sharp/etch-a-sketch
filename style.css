@@ -3,17 +3,16 @@
     width: 500px;
 
     display: grid;
-    grid-template-columns: repeat(16, 1fr);
-    grid-gap: 1px;
-
-    padding: 1px;
-    background-color: black;
 
     touch-action: pinch-zoom;
 }
 
 .etch-cell {
+    border: solid black 1px;
     background-color: white;
+
+    margin-left: -1px;
+    margin-bottom: -1px;
 }
 
 .etch-cell.filled {
