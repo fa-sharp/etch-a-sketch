@@ -1,3 +1,9 @@
+.main-view {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
 .etch-grid {
     height: 500px;
     width: 500px;
@@ -8,7 +14,7 @@
 }
 
 .etch-cell {
-    border: solid black 1px;
+    border: solid #9b9b9b 1px;
     background-color: white;
 
     margin-left: -1px;
@@ -16,5 +22,17 @@
 }
 
 .etch-cell.filled {
+    background-color: gray;
+}
+
+
+.saved-grid {
+    height: 200px;
+    width: 200px;
+
+    display: grid;
+}
+
+.saved-cell.filled {
     background-color: gray;
 }
