@@ -1,11 +1,14 @@
 const etchGridElement = document.querySelector(".etch-grid");
 const savedGridElement = document.querySelector(".saved-grid");
 
-const saveGridButton = document.querySelector("#saveGridButton");
 const resetGridButton = document.querySelector("#resetGridButton");
+const saveGridButton = document.querySelector("#saveGridButton");
+const eraserCheckbox = document.querySelector("#eraserCheckbox");
 
 const DEFAULT_GRID_SIZE = 32;
+
 let currentGridSize = DEFAULT_GRID_SIZE;
+let eraser = false;
 
 /** Mouse event listener for filling in the cells */
 const onEtchGridPointerMove = (event) => {
@@ -15,8 +18,12 @@ const onEtchGridPointerMove = (event) => {
     // search for the cell using coordinates (can't use event.target because pointermove event on mobile won't update the target element as you move across the grid)
     const target = document.elementFromPoint(event.clientX,event.clientY);
 
-    if (target.classList.contains("etch-cell")) // check if target element is a cell
-        target.classList.add("filled");
+    if (target.classList.contains("etch-cell")) { // check if target element is a cell
+        if (!eraser)
+            target.classList.add("filled");
+        else
+            target.classList.remove("filled");
+    }
 }
 
 /** Clears the etch grid and creates a new one with the given size */
@@ -50,6 +57,14 @@ const createEtchGrid = (size) => {
     etchGridElement.addEventListener("pointermove", onEtchGridPointerMove);
 }
 
+// Creating the etch grid and saved grid on page load
+createEtchGrid(DEFAULT_GRID_SIZE);
+createSavedGrid();
+eraserCheckbox.checked = false;
+
+
+/********************* CONTROLS ********************/
+
 // Event listener for reset button
 resetGridButton.addEventListener("click", () => {
     let newGridSize = prompt("New grid size (limit 100): ", currentGridSize);
@@ -60,11 +75,14 @@ resetGridButton.addEventListener("click", () => {
 // Event listener for save button
 saveGridButton.addEventListener("click", () => {
     saveCurrentGrid();
-})
+});
 
-// Creating the etch grid and saved grid on page load
-createEtchGrid(DEFAULT_GRID_SIZE);
-createSavedGrid();
+// Event listener for enabling/disabling eraser
+eraserCheckbox.addEventListener("change", (event) => {
+    eraser = event.target.checked;
+});
+
+/****************************************************/
 
 
 
@@ -82,6 +100,7 @@ function saveCurrentGrid() {
     createSavedGrid();
 }
 
+/** Re-create the saved drawing from local storage */
 function createSavedGrid() {
     // reset saved grid
     Array.from(savedGridElement.childNodes).forEach(child => child.remove());

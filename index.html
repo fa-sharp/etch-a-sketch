@@ -12,10 +12,14 @@
     <div class="controls">
         <button id="resetGridButton">Clear/Reset</button>
         <button id="saveGridButton">Save</button>
+        <div class="toggle-setting">
+            <label for="eraserCheckbox">Eraser</label>
+            <input type="checkbox" name="eraser" id="eraserCheckbox">
+        </div>
     </div>
     <br><br>
     <div class="main-view">
-        <div class="etch-grid"></div>
+        <div class="etch-grid" draggable="false"></div>
         <div class="saved-drawings">
             <h3>Saved:</h3>
             <div class="saved-grid"></div>

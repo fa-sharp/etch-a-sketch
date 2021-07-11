@@ -1,6 +1,17 @@
 .controls {
     display: flex;
     gap: 1rem;
+    align-items: baseline;
+}
+
+.toggle-setting {
+    display: flex;
+    gap: 3px;
+    border: 1px solid black;
+    padding: 1px 2px;
+    font-size: 0.9em;
+    align-items: center;
+    border-radius: 6%;
 }
 
 .main-view {
@@ -15,6 +26,7 @@
 
     display: grid;
 
+    cursor: default;
     touch-action: pinch-zoom;
 }
 
