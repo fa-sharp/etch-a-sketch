@@ -1,8 +1,10 @@
 const etchGridElement = document.querySelector(".etch-grid");
 const savedGridElement = document.querySelector(".saved-grid");
-const resetGridButton = document.querySelector("#resetGridButton");
-const DEFAULT_GRID_SIZE = 32;
 
+const saveGridButton = document.querySelector("#saveGridButton");
+const resetGridButton = document.querySelector("#resetGridButton");
+
+const DEFAULT_GRID_SIZE = 32;
 let currentGridSize = DEFAULT_GRID_SIZE;
 
 /** Mouse event listener for filling in the cells */
@@ -19,8 +21,6 @@ const onEtchGridPointerMove = (event) => {
 
 /** Clears the etch grid and creates a new one with the given size */
 const createEtchGrid = (size) => {
-    saveCurrentGrid();
-
     // validate size
     size = Number.parseInt(size);
     if (!size || size < 1 || size > 100) {
@@ -50,15 +50,23 @@ const createEtchGrid = (size) => {
     etchGridElement.addEventListener("pointermove", onEtchGridPointerMove);
 }
 
-// Adding event listener for reset button
+// Event listener for reset button
 resetGridButton.addEventListener("click", () => {
     let newGridSize = prompt("New grid size (limit 100): ", currentGridSize);
     if (newGridSize)
         createEtchGrid(newGridSize);
 });
 
-// Creating the etch grid on page load
+// Event listener for save button
+saveGridButton.addEventListener("click", () => {
+    saveCurrentGrid();
+})
+
+// Creating the etch grid and saved grid on page load
 createEtchGrid(DEFAULT_GRID_SIZE);
+createSavedGrid();
+
+
 
 /** Save the current drawing to local storage */
 function saveCurrentGrid() {

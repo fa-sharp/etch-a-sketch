@@ -1,7 +1,12 @@
+.controls {
+    display: flex;
+    gap: 1rem;
+}
+
 .main-view {
     display: flex;
     flex-wrap: wrap;
-    gap: 2rem;
+    gap: 1.5rem;
 }
 
 .etch-grid {
@@ -25,6 +30,16 @@
     background-color: gray;
 }
 
+
+.saved-drawings {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.saved-drawings h3 {
+    margin-top: 0;
+}
 
 .saved-grid {
     height: 200px;

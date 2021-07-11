@@ -9,11 +9,17 @@
 </head>
 <body>
     <h1>Etch-A-Sketch!</h1>
-    <button id="resetGridButton">Clear/Reset</button>
+    <div class="controls">
+        <button id="resetGridButton">Clear/Reset</button>
+        <button id="saveGridButton">Save</button>
+    </div>
     <br><br>
     <div class="main-view">
         <div class="etch-grid"></div>
-        <div class="saved-grid"></div>
+        <div class="saved-drawings">
+            <h3>Saved:</h3>
+            <div class="saved-grid"></div>
+        </div>
     </div>
 </body>
 <script src="etch-script.js"></script>
