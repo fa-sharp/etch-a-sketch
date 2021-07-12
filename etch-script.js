@@ -10,24 +10,20 @@ const DEFAULT_GRID_SIZE = 32;
 let currentGridSize = DEFAULT_GRID_SIZE;
 let eraser = false;
 
-/** Mouse event listener for filling in the cells */
-const onEtchGridPointerMove = (event) => {
-    if (event.buttons !== 1) // check if primary mouse button is clicked
-        return;
-    
-    // search for the cell using coordinates (can't use event.target because pointermove event on mobile won't update the target element as you move across the grid)
-    const target = document.elementFromPoint(event.clientX,event.clientY);
+init();
 
-    if (target.classList.contains("etch-cell")) { // check if target element is a cell
-        if (!eraser)
-            target.classList.add("filled");
-        else
-            target.classList.remove("filled");
-    }
+/** Setting up the etch grid, saved grid, and controls on page load */
+function init() {
+    createEtchGrid(DEFAULT_GRID_SIZE);
+    createSavedGrid();
+    eraserCheckbox.checked = false;
+    setUpControlListeners();
 }
 
+/******************* ETCH GRID SETUP **********************/
+
 /** Clears the etch grid and creates a new one with the given size */
-const createEtchGrid = (size) => {
+function createEtchGrid(size) {
     // validate size
     size = Number.parseInt(size);
     if (!size || size < 1 || size > 100) {
@@ -57,34 +53,56 @@ const createEtchGrid = (size) => {
     etchGridElement.addEventListener("pointermove", onEtchGridPointerMove);
 }
 
-// Creating the etch grid and saved grid on page load
-createEtchGrid(DEFAULT_GRID_SIZE);
-createSavedGrid();
-eraserCheckbox.checked = false;
+/** Mouse/pointer event listener for filling in the cells */
+function onEtchGridPointerMove(event) {
+    if (event.buttons !== 1) // check if primary mouse button is clicked
+        return;
+    event.preventDefault();
+    
+    // search for the cell using coordinates (can't use event.target because pointermove event on mobile won't update the target element as you move across the grid)
+    const target = document.elementFromPoint(event.clientX,event.clientY);
+
+    if (target.classList.contains("etch-cell")) { // check if target element is a cell
+        if (!eraser)
+            target.classList.add("filled");
+        else
+            target.classList.remove("filled");
+    }
+}
+/****************************************************/
+
 
 
 /********************* CONTROLS ********************/
 
-// Event listener for reset button
-resetGridButton.addEventListener("click", () => {
-    let newGridSize = prompt("New grid size (limit 100): ", currentGridSize);
-    if (newGridSize)
-        createEtchGrid(newGridSize);
-});
+/** Setting up the event listeners for the controls */
+function setUpControlListeners() {
 
-// Event listener for save button
-saveGridButton.addEventListener("click", () => {
-    saveCurrentGrid();
-});
+    // Event listener for reset button
+    resetGridButton.addEventListener("click", () => {
+        let newGridSize = prompt("New grid size (limit 100): ", currentGridSize);
+        if (newGridSize)
+            createEtchGrid(newGridSize);
+    });
 
-// Event listener for enabling/disabling eraser
-eraserCheckbox.addEventListener("change", (event) => {
-    eraser = event.target.checked;
-});
+    // Event listener for save button
+    saveGridButton.addEventListener("click", () => {
+        saveCurrentGrid();
+    });
+
+    // Event listener for enabling/disabling eraser
+    eraserCheckbox.addEventListener("change", (event) => {
+        const {target} = event;
+        eraser = target.checked;
+        target.parentElement.classList.toggle("enabled");
+    });
+}
 
 /****************************************************/
 
 
+
+/****************** SAVING/LOADING DRAWING ******************/
 
 /** Save the current drawing to local storage */
 function saveCurrentGrid() {
@@ -128,3 +146,5 @@ function createSavedGrid() {
         savedGridElement.appendChild(savedCell);
     }
 }
+
+/********************************************************/

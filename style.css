@@ -6,12 +6,16 @@
 
 .toggle-setting {
     display: flex;
-    gap: 3px;
+    gap: 4px;
     border: 1px solid black;
-    padding: 1px 2px;
+    padding: 1px 6px;
     font-size: 0.9em;
     align-items: center;
     border-radius: 6%;
+}
+
+.toggle-setting.enabled {
+    background-color: #9eff9e;
 }
 
 .main-view {
@@ -27,7 +31,6 @@
     display: grid;
 
     cursor: default;
-    touch-action: pinch-zoom;
 }
 
 .etch-cell {
